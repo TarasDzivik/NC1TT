@@ -12,14 +12,72 @@ namespace NC1TestTask.Entities.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ProgrammingLanguage> builder)
         {
-            builder.HasKey(pl => pl.Id);
+            builder.HasKey(pl => pl.PLId);
 
             builder.Property(pl => pl.Name)
                 .HasColumnName("Language")
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
-                .ValueGeneratedNever()
                 .IsRequired();
+
+            #region HasData
+            builder.HasData(
+                new ProgrammingLanguage
+                {
+                    PLId = 1,
+                    Name = "C#"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 2,
+                    Name = "Java"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 3,
+                    Name = "Pyton"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 4,
+                    Name = "Scala"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 5,
+                    Name = "Java Script"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 6,
+                    Name = "C"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 7,
+                    Name = "C++"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 8,
+                    Name = "PHP"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 9,
+                    Name = "Visual Basic"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 10,
+                    Name = "Swift"
+                },
+                new ProgrammingLanguage
+                {
+                    PLId = 11,
+                    Name = "NodeJS"
+                });
+            #endregion
         }
     }
 }

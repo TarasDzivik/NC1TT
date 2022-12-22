@@ -11,7 +11,7 @@ namespace NC1TestTask.Entities.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => e.EmployeeId);
 
             builder.Property(e => e.Name)
                 .HasColumnName("Name")
@@ -38,11 +38,7 @@ namespace NC1TestTask.Entities.EntityConfigurations
 
             builder.HasOne(e => e.Department)
                 .WithMany(d => d.Employees)
-                .HasForeignKey(d => d.Name);
-
-            builder.HasOne(e => e.ProgrammingLanguage)
-                .WithOne()
-                .HasForeignKey<ProgrammingLanguage>(pl => pl.Id);
+                .HasForeignKey(d => d.EmployeeId);
         }
     }
 }

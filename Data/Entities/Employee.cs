@@ -1,4 +1,5 @@
-﻿using NC1TestTask.Data.Enums;
+﻿using NC1TestTask.Data.Entities.JoiningEntities;
+using NC1TestTask.Data.Enums;
 
 namespace NC1TestTask.Data.Entities;
 
@@ -7,7 +8,7 @@ public class Employee
     /// <summary>
     /// The Id of the employee.
     /// </summary>
-    public int Id { get; set; }
+    public int EmployeeId { get; set; }
     /// <summary>
     /// The first name of the employee.
     /// </summary>
@@ -21,15 +22,15 @@ public class Employee
     /// </summary>
     public int Age { get; set; }
     /// <summary>
-    /// Employee's gender (should be Male, Femail or Other).
+    /// Employee's gender (should be "0" - Femail, "1" - Male or "2" - Other).
     /// </summary>
     public GenderType Gender { get; set; }
     /// <summary>
     /// Reference to the Department that the employee belongs.
     /// </summary>
-    public Department Department { get; set; }
+    public Department? Department { get; set; }
     /// <summary>
     /// Reference to the programming language the employee works with.
     /// </summary>
-    public ProgrammingLanguage ProgrammingLanguage { get; set; }
+    public virtual List<EmployeeProgLanguage>? EmloyeeProgLanguages { get; set; }
 }

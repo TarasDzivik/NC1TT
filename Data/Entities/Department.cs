@@ -6,16 +6,20 @@
 public class Department
 {
     /// <summary>
+    /// Department Id.
+    /// </summary>
+    public int DepartmentId { get; set; }
+    /// <summary>
     /// Department name.
     /// </summary>
     public string Name { get; set; }
     /// <summary>
     /// The Floor where the current department is placed.
     /// </summary>
-    public int Floor { get; set; }
+    public int? Floor { get; set; }
     /// <summary>
     /// The List of Employees that belongs to the current department.
     /// </summary>
-    public List<Employee> Employees { get; set; }
+    public List<Employee>? Employees { get; set; }
 
 }

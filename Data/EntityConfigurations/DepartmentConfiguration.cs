@@ -11,20 +11,42 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 {
     public void Configure(EntityTypeBuilder<Department> builder)
     {
-        builder.HasKey(d => d.Name);
+        builder.HasKey(d => d.DepartmentId);
+
         builder.Property(d => d.Name)
             .HasColumnName("Department")
             .HasColumnType("varchar")
+            .HasMaxLength(50)
             .IsRequired();
 
         builder.Property(d => d.Floor)
             .HasColumnName("Floor")
-            .HasColumnType("smallint") // Used the "smallint" because the floor can have a negative range.
-            .IsRequired();
+            .HasColumnType("smallint");
 
         builder.HasMany(d => d.Employees)
             .WithOne(e => e.Department)
-            .HasForeignKey(d => d.Id);
+            .HasForeignKey(d => d.EmployeeId);
 
+        #region HasData
+        builder.HasData(
+            new Department
+            {
+                DepartmentId= 1,
+                Name = "Engenering",
+                Floor = -1,
+            },
+            new Department
+            {
+                DepartmentId= 2,
+                Name = "Human Resources",
+                Floor = 0
+            },
+            new Department
+            {
+                DepartmentId= 3,
+                Name = "Design Head",
+                Floor = 1
+            });
+        #endregion
     }
 }
