@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NC1TestTask.Data.Entities;
 using System.Reflection;
-using NC1TestTask.Data.DTOs;
 
 namespace NC1TestTask.Data
 {
@@ -21,11 +20,5 @@ namespace NC1TestTask.Data
                 modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             }
         }
-
-        public DbSet<EmployeeDto> EmployeeDto { get; set; }
-
-        public DbSet<ProgrammingLanguageDto> ProgrammingLanguageDto { get; set; }
-
-        public DbSet<DepartmentDto> DepartmentDto { get; set; }
     }
 }

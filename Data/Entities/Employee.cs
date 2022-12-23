@@ -32,5 +32,5 @@ public class Employee
     /// <summary>
     /// Reference to the programming language the employee works with.
     /// </summary>
-    public virtual List<EmployeeProgLanguage>? EmloyeeProgLanguages { get; set; }
+    public virtual IList<EmployeeProgLanguage>? EmloyeeProgLanguages { get; set; }
 }

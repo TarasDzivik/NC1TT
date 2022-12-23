@@ -18,5 +18,5 @@ public class ProgrammingLanguage
     /// <summary>
     /// THe list of references to Employees that working with this Programming Language
     /// </summary>
-    public virtual List<EmployeeProgLanguage> EmployeeProgLanguages { get; set; }
+    public virtual IList<EmployeeProgLanguage>? EmployeeProgLanguages { get; set; }
 }
