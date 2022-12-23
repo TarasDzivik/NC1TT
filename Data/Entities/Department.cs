@@ -18,8 +18,8 @@ public class Department
     /// </summary>
     public int? Floor { get; set; }
     /// <summary>
-    /// The List of Employees that belongs to the current department.
+    /// The referance to a List of Employees that belongs to the current department.
     /// </summary>
-    public List<Employee>? Employees { get; set; }
+    public IList<Employee>? Employees { get; set; }
 
 }
