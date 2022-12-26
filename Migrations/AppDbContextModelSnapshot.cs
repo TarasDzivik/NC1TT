@@ -30,10 +30,6 @@ namespace NC1TestTask.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<short?>("Floor")
                         .HasColumnType("smallint")
                         .HasColumnName("Floor");
@@ -47,10 +43,6 @@ namespace NC1TestTask.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Department");
-
-                    b.UseTphMappingStrategy();
 
                     b.HasData(
                         new
@@ -76,15 +68,17 @@ namespace NC1TestTask.Migrations
             modelBuilder.Entity("NC1TestTask.Data.Entities.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
 
                     b.Property<byte>("Age")
                         .HasColumnType("tinyint")
                         .HasColumnName("Age");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CurrentDepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -106,11 +100,9 @@ namespace NC1TestTask.Migrations
 
                     b.HasKey("EmployeeId");
 
+                    b.HasIndex("CurrentDepartmentId");
+
                     b.ToTable("Employees");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Employee");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("NC1TestTask.Data.Entities.JoiningEntities.EmployeeProgLanguage", b =>
@@ -136,10 +128,6 @@ namespace NC1TestTask.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PLId"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -149,10 +137,6 @@ namespace NC1TestTask.Migrations
                     b.HasKey("PLId");
 
                     b.ToTable("ProgrammingLanguages");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ProgrammingLanguage");
-
-                    b.UseTphMappingStrategy();
 
                     b.HasData(
                         new
@@ -212,39 +196,12 @@ namespace NC1TestTask.Migrations
                         });
                 });
 
-            modelBuilder.Entity("NC1TestTask.Data.DTOs.DepartmentDto", b =>
-                {
-                    b.HasBaseType("NC1TestTask.Data.Entities.Department");
-
-                    b.HasDiscriminator().HasValue("DepartmentDto");
-                });
-
-            modelBuilder.Entity("NC1TestTask.Data.DTOs.EmployeeDto", b =>
-                {
-                    b.HasBaseType("NC1TestTask.Data.Entities.Employee");
-
-                    b.Property<int?>("ProgrammingLanguagePLId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("ProgrammingLanguagePLId");
-
-                    b.HasDiscriminator().HasValue("EmployeeDto");
-                });
-
-            modelBuilder.Entity("NC1TestTask.Data.DTOs.ProgrammingLanguageDto", b =>
-                {
-                    b.HasBaseType("NC1TestTask.Data.Entities.ProgrammingLanguage");
-
-                    b.HasDiscriminator().HasValue("ProgrammingLanguageDto");
-                });
-
             modelBuilder.Entity("NC1TestTask.Data.Entities.Employee", b =>
                 {
                     b.HasOne("NC1TestTask.Data.Entities.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CurrentDepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Department");
                 });
@@ -266,15 +223,6 @@ namespace NC1TestTask.Migrations
                     b.Navigation("Empl");
 
                     b.Navigation("PrLanguage");
-                });
-
-            modelBuilder.Entity("NC1TestTask.Data.DTOs.EmployeeDto", b =>
-                {
-                    b.HasOne("NC1TestTask.Data.Entities.ProgrammingLanguage", "ProgrammingLanguage")
-                        .WithMany()
-                        .HasForeignKey("ProgrammingLanguagePLId");
-
-                    b.Navigation("ProgrammingLanguage");
                 });
 
             modelBuilder.Entity("NC1TestTask.Data.Entities.Department", b =>

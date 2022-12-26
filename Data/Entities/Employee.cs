@@ -26,6 +26,10 @@ public class Employee
     /// </summary>
     public GenderType Gender { get; set; }
     /// <summary>
+    /// Foreign key to Department entity.
+    /// </summary>
+    public int? CurrentDepartmentId { get; set; }
+    /// <summary>
     /// Reference to the Department that the employee belongs.
     /// </summary>
     public Department? Department { get; set; }

@@ -23,9 +23,10 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
             .HasColumnName("Floor")
             .HasColumnType("smallint");
 
-        builder.HasMany(d => d.Employees)
+        builder.HasMany<Employee>(d => d.Employees)
             .WithOne(e => e.Department)
-            .HasForeignKey(d => d.EmployeeId);
+            .HasForeignKey(e => e.CurrentDepartmentId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         #region HasData
         builder.HasData(

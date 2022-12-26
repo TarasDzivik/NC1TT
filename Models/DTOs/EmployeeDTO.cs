@@ -8,8 +8,8 @@ namespace NC1TestTask.Models.DTOs
     public class EmployeeDTO : CreateEmployeeDTO
     {
         public int EmployeeId { get; set; }
-        public DepartmentDTO Department { get; set; }
-        public IList<EmployeeProgLanguage> EmloyeeProgLanguages { get; set; }
+        public DepartmentDTO? Department { get; set; }
+        public IList<EmployeeProgLanguage>? EmloyeeProgLanguages { get; set; }
     }
     public class CreateEmployeeDTO
     {
@@ -26,5 +26,7 @@ namespace NC1TestTask.Models.DTOs
         public int Age { get; set; }
         [Required]
         public GenderType Gender { get; set; }
+
+        public int? CurrentDepartmentId { get; set; }
     }
 }

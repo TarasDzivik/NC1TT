@@ -48,24 +48,16 @@ namespace NC1TestTask.Rpository
         #endregion
         #region Getting
         public async Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null)
-        {
-            try
+        {   
+            IQueryable<T> query = _db;
+            if (includes != null)
             {
-                IQueryable<T> query = _db;
-                if (includes != null)
+                foreach (var includedProp in includes)
                 {
-                    foreach (var includedProp in includes)
-                    {
-                        query = query.Include(includedProp);
-                    }
+                    query = query.Include(includedProp);
                 }
-                return await query.AsNoTracking().FirstOrDefaultAsync(expression);
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            return await query.AsNoTracking().FirstOrDefaultAsync(expression);   
         }
 
         public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
