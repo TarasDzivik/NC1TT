@@ -29,4 +29,9 @@ namespace NC1TestTask.Models.DTOs
 
         public int? CurrentDepartmentId { get; set; }
     }
+
+    public class UpdateEmployeeDTO : CreateEmployeeDTO
+    {
+
+    }
 }

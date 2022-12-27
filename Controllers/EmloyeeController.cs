@@ -24,7 +24,7 @@ namespace NC1TestTask.Controllers
         #endregion
 
         #region Calls
-        #region Get methods
+        #region Gets
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -51,9 +51,13 @@ namespace NC1TestTask.Controllers
         {
             try
             {
-                var employee = await _unitOfWork.Employees.Get(q => q.EmployeeId == id, new List<string> {"EmloyeeProgLanguages"} );
+                var employee = await _unitOfWork.Employees.Get(q => q.EmployeeId == id, new List<string> { "EmloyeeProgLanguages" });
+                if (employee == null)
+                {
+                    return NotFound($"There are no Employee with id: {id}");
+                }
                 var result = _mapper.Map<EmployeeDTO>(employee);
-                return Ok(result);
+                return Ok(employee); //TODO: Rewrite return type to get only nesesary info about Employee (without water)
             }
             catch (Exception ex)
             {
@@ -62,12 +66,13 @@ namespace NC1TestTask.Controllers
             }
         }
         #endregion
-        #region Post method
+
+        #region Post
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] CreateEmployeeDTO employeeDTO)
+        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeDTO employeeDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -90,8 +95,66 @@ namespace NC1TestTask.Controllers
 
 
         #endregion
-        #region Put method
 
+        #region Put
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDTO employeeDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                Console.WriteLine($"Invalid UPDATE in {nameof(UpdateEmployee)}, check model state.");
+                return BadRequest();
+            }
+            try
+            {
+                var employee = await _unitOfWork.Employees.Get(e => e.EmployeeId == id);
+                if (employee == null)
+                {
+                    return BadRequest("Submited data is invalid");
+                }
+
+                _mapper.Map(employeeDTO, employee);
+                _unitOfWork.Employees.Update(employee);
+                await _unitOfWork.Save();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, "Internal server error! Check your console.");
+            }
+        }
+        #endregion
+
+        #region Delete
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEmployee([FromQuery] int id)
+        {
+            if (id < 1)
+            {
+                Console.WriteLine("You have entered an invalid ID!");
+                return BadRequest();
+            }
+            try
+            {
+                var employee = await _unitOfWork.Employees.Get(e => e.EmployeeId == id);
+                if (employee == null)
+                {
+                    return NotFound($"There are no Employee with id: {id}");
+                }
+                await _unitOfWork.Employees.Delete(id);
+                await _unitOfWork.Save();
+                return Ok($"User with id: {id} successfuly deleted!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, "Internal Server Error! Pleace, check the console.");
+            }
+        }
         #endregion
         #endregion
     }
