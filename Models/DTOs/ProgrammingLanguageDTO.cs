@@ -16,4 +16,9 @@ namespace NC1TestTask.Models.DTOs
         [StringLength(maximumLength: 40, ErrorMessage = "Programming Language name is too long!")]
         public string Name { get; set; }
     }
+
+    public class UpdateProgrammingLanguageDTO : CreateProgrammingLanguageDTO
+    {
+    
+    }
 }
