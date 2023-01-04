@@ -36,9 +36,10 @@ namespace NC1TestTask.Entities.EntityConfigurations
                 .HasMaxLength(6)
                 .IsRequired();
 
-            builder.HasOne(e => e.Department)
+            builder.HasOne<Department>(e => e.Department)
                 .WithMany(d => d.Employees)
-                .HasForeignKey(d => d.EmployeeId);
+                .HasForeignKey(e => e.CurrentDepartmentId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

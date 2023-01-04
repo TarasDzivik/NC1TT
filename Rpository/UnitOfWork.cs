@@ -34,15 +34,7 @@ namespace NC1TestTask.Rpository
         }
         public async Task Save()
         {
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -20,6 +20,6 @@ public class Department
     /// <summary>
     /// The referance to a List of Employees that belongs to the current department.
     /// </summary>
-    public IList<Employee>? Employees { get; set; }
+    public ICollection<Employee>? Employees { get; set; }
 
 }

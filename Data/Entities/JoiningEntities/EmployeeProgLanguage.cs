@@ -12,7 +12,7 @@
         /// <summary>
         /// Refferance to the current Employee.
         /// </summary>
-        public Employee Empl { get; set; }
+        public Employee? Empl { get; set; }
 
         /// <summary>
         /// Programming Language Id.
@@ -21,6 +21,6 @@
         /// <summary>
         /// Refferance to the current Programming Language.
         /// </summary>
-        public ProgrammingLanguage PrLanguage { get; set; }
+        public ProgrammingLanguage? PrLanguage { get; set; }
     }
 }

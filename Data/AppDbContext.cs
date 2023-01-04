@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NC1TestTask.Data.Entities;
+using NC1TestTask.Data.EntityConfigurations.JoiningEntitiesConfigurations;
+using NC1TestTask.Entities.EntityConfigurations;
 using System.Reflection;
 
 namespace NC1TestTask.Data
@@ -17,7 +19,10 @@ namespace NC1TestTask.Data
             base.OnModelCreating(modelBuilder);
 
             {
-                modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+                modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+                modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+                modelBuilder.ApplyConfiguration(new ProgrammingLanguageConfiguration());
+                modelBuilder.ApplyConfiguration(new EmployeeProgLanguageConfiguration());
             }
         }
     }

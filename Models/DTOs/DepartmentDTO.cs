@@ -19,4 +19,9 @@ namespace NC1TestTask.Models.DTOs
         [Range(minimum: -50, maximum: 400, ErrorMessage = "We do not believe that such a floor exists!")]
         public int Floor { get; set; }
     }
+
+    public class UpdateDepartmentDTO : CreateDepartmentDTO
+    {
+
+    }
 }
